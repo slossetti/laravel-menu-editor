@@ -1,5 +1,5 @@
 {
-    "name": "roswell/laravel-menu-editor",
+    "name": "slossetti/laravel-menu-editor",
     "description": "Editor de menús para Laravel con Livewire 3",
     "type": "library",
     "license": "MIT",

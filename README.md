@@ -19,7 +19,7 @@ Editor visual de menús con soporte para submenús, ordenamiento drag & drop, y 
 ## 📆 Instalación
 
 ```bash
-composer require roswell/menu-editor
+composer require slossetti/menu-editor
 ```
 
 ### Publicar recursos (opcional)
