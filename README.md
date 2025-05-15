@@ -50,6 +50,37 @@ Incluí el componente en cualquier vista:
 
 ---
 
+## Menu en vistas
+
+Este paquete registra automáticamente un View Composer que inyecta los ítems del menú en todas las vistas bajo la variable:
+
+```php
+$menuItems
+```
+
+Esto te permite renderizar el menú desde cualquier lugar:
+
+```blade
+<ul>
+    @foreach ($menuItems as $item)
+        <li>
+            <a href="{{ $item->route }}">
+                {{ $item->text }}
+            </a>
+            @if ($item->children->isNotEmpty())
+                <ul>
+                    @foreach ($item->children as $child)
+                        <li><a href="{{ $child->route }}">{{ $child->text }}</a></li>
+                    @endforeach
+                </ul>
+            @endif
+        </li>
+    @endforeach
+</ul>
+```
+
+Los ítems están cacheados automáticamente por tipo de menú (menu, admin, etc.).
+
 ## ⚙ Configuración
 
 El archivo `config/menu-editor.php` se puede usar para definir opciones globales del editor (en desarrollo).

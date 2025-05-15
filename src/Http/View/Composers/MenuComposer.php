@@ -26,6 +26,6 @@ class MenuComposer
                 ->get();
         });
 
-        $view->with('menu', $menu);
+        $view->with('menuItems', $menu);
     }
 }
