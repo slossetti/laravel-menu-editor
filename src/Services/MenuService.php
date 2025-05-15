@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace MenuEditor\Services;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
