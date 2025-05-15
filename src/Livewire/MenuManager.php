@@ -1,18 +1,11 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace MenuEditor\Livewire;
 
-use App\Models\Menu;
 use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Services\MenuService;
-use Livewire\Attributes\Title;
-use Livewire\Attributes\Layout;
-use Illuminate\Support\Collection;
 use WireUi\Traits\WireUiActions;
 
-#[Title('Menu Manager')]
-#[Layout('layouts.app')]
 class MenuManager extends Component
 {
     Use WireUiActions;
@@ -32,8 +25,16 @@ class MenuManager extends Component
     public $newType = '';
     public $creatingNewType = false;
 
+    public $menuModelClass;
+
     public function mount()
     {
+        $this->menuModelClass = config('menu-editor.menu_model');
+
+        if (!class_exists($this->menuModelClass)) {
+            throw new \RuntimeException("El modelo [$this->menuModelClass] no existe. Verificá tu configuración.");
+        }
+
         $this->loadTypes();
         $this->loadMenus();
     }
@@ -46,7 +47,7 @@ class MenuManager extends Component
 
     public function loadTypes()
     {
-        $this->types = Menu::select('type')
+        $this->types = $this->menuModelClass::select('type')
             ->distinct()
             ->orderBy('type')
             ->pluck('type')
@@ -77,7 +78,7 @@ class MenuManager extends Component
 
     public function loadMenus()
     {
-        $this->menus = Menu::where('type', $this->type)
+        $this->menus = $this->menuModelClass::where('type', $this->type)
             ->whereNull('parent_id')
             ->orderBy('order')
             ->with(['children' => fn ($q) => $q->orderBy('order')])
@@ -110,7 +111,7 @@ class MenuManager extends Component
             'icon' => 'success',
         ]);
 
-        Menu::where('id', $id)->orWhere('parent_id', $id)->delete();
+        $this->menuModelClass::where('id', $id)->orWhere('parent_id', $id)->delete();
         MenuService::clearCache();
         $this->loadMenus();
 
@@ -119,7 +120,7 @@ class MenuManager extends Component
     public function updateOrder($items)
     {
         foreach ($items as $index => $item) {
-            Menu::where('id', $item['value'])->update([
+            $this->menuModelClass::where('id', $item['value'])->update([
                 'order' => $index + 1,
             ]);
         }
@@ -134,7 +135,7 @@ class MenuManager extends Component
             $parentId = (int) $group['value']; // ID del menú padre
 
             foreach ($group['items'] as $item) {
-                Menu::where('id', $item['value'])->update([
+                $this->menuModelClass::where('id', $item['value'])->update([
                     'order' => $item['order'],
                     'parent_id' => $parentId,
                 ]);
@@ -148,6 +149,6 @@ class MenuManager extends Component
 
     public function render()
     {
-        return view('livewire.admin.menu-manager');
+        return view('menu-editor::livewire.menu-manager');
     }
 }

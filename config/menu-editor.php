@@ -2,6 +2,8 @@
 
 return [
 
+    'menu_model' => MenuEditor\Models\Menu::class,
+
     /*
     |--------------------------------------------------------------------------
     | Menu Items

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace MenuEditor\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    protected $guarded = [];
+
     protected $fillable = [
         'type', 'parent_id', 'text', 'route', 'match', 'icon', 'order', 'can',
     ];

@@ -10,7 +10,7 @@
     </p>
 
     {{-- Selección de tipo de menú --}}
-    <x-flex-card
+    <x-menu-editor::flex-card
         title="Tipo de Menú"
         class="bg-gray-50 dark:bg-gray-800"
     >
@@ -38,10 +38,10 @@
                 <x-button flat wire:click="$set('creatingNewType', false)" icon="x-mark">Cancelar</x-button>
             </form>
         @endif
-    </x-flex-card>
+    </x-menu-editor::flex-card>
 
     {{-- Lista de ítems actuales --}}
-    <x-flex-card
+    <x-menu-editor::flex-card
         :title="'Ítems del menú (' . ucfirst($type) . ')'"
         class="bg-gray-50 dark:bg-gray-800"
             :headerAction="view('components.menu-create-button', ['type' => $type])->render()"
@@ -90,6 +90,6 @@
             </div>
         @endif
 
-    </x-flex-card>
+    </x-menu-editor::flex-card>
 
 </div>
