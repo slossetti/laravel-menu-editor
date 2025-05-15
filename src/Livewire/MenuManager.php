@@ -3,7 +3,7 @@
 namespace MenuEditor\Livewire;
 
 use Livewire\Component;
-use App\Services\MenuService;
+use MenuEditor\Services\MenuService;
 
 class MenuManager extends Component
 {
