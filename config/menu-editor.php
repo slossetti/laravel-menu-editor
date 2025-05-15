@@ -50,24 +50,4 @@ return [
         ],
 
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Admin Menu Items
-    |--------------------------------------------------------------------------
-    |
-    | Here we can modify the sidebar/top navigation of the admin panel.
-    | You can add your own items to this array.
-    |
-    */
-
-    'admin' => [
-        [
-            'text'  => 'Dashboard',
-            'route' => 'dashboard',
-            'match' => 'dashboard',
-            'icon'  => 'home',
-        ],
-    ],
-
 ];
