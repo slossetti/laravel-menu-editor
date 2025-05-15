@@ -10,32 +10,43 @@
     </p>
 
     {{-- Selección de tipo de menú --}}
-    <x-menu-editor::flex-card
-        title="Tipo de Menú"
-        class="bg-gray-50 dark:bg-gray-800"
-    >
-
+    <x-menu-editor::flex-card title="Tipo de Menú" class="bg-gray-50 dark:bg-gray-800">
         @if (!$creatingNewType)
             <div class="flex items-end gap-4">
                 <div class="w-1/2">
-                    <x-select label="Seleccionar tipo existente" wire:model.live="type">
-                        <x-select.option value="menu" label="Principal" />
-                        <x-select.option value="admin" label="Admin" />
-                        <x-select.option value="aprobador" label="Aprobador" />
-                    </x-select>
+                    <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Seleccionar tipo existente</label>
+                    <select id="type" wire:model.live="type" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white">
+                        <option value="menu">Principal</option>
+                        <option value="admin">Admin</option>
+                        <option value="aprobador">Aprobador</option>
+                    </select>
                 </div>
 
-                <x-button
+                <button
+                    type="button"
                     wire:click="$set('creatingNewType', true)"
-                    icon="plus"
-                    label="Crear nuevo tipo"
-                />
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700"
+                >
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"></path></svg>
+                    Crear nuevo tipo
+                </button>
             </div>
         @else
             <form wire:submit.prevent="createNewType" class="flex items-end gap-4">
-                <x-input label="Nombre del nuevo tipo" wire:model.defer="newType" placeholder="Ej: auditoria" />
-                <x-button type="submit" icon="check" primary>Crear y usar</x-button>
-                <x-button flat wire:click="$set('creatingNewType', false)" icon="x-mark">Cancelar</x-button>
+                <div class="w-1/2">
+                    <label for="newType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre del nuevo tipo</label>
+                    <input id="newType" type="text" wire:model.defer="newType" placeholder="Ej: auditoria" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white" />
+                </div>
+
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>
+                    Crear y usar
+                </button>
+
+                <button type="button" wire:click="$set('creatingNewType', false)" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded border hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-800">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+                    Cancelar
+                </button>
             </form>
         @endif
     </x-menu-editor::flex-card>
@@ -44,7 +55,7 @@
     <x-menu-editor::flex-card
         :title="'Ítems del menú (' . ucfirst($type) . ')'"
         class="bg-gray-50 dark:bg-gray-800"
-            :headerAction="view('menu-editor::components.menu-create-button', ['type' => $type])->render()"
+        :headerAction="view('menu-editor::components.menu-create-button', ['type' => $type])->render()"
     >
         @if ($menus->isEmpty())
             <div class="text-gray-500">No hay ítems en este menú.</div>
@@ -55,17 +66,22 @@
                 wire:key="sortable-{{ $type }}"
                 class="flex flex-col gap-4"
             >
-
                 @foreach ($menus as $menu)
                     <div wire:sortable.item="{{ $menu->id }}" wire:key="menu-{{ $menu->id }}" class="border rounded-lg p-4 bg-white dark:bg-gray-900 shadow-sm">
                         <div class="flex justify-between items-center mb-2">
                             <div wire:sortable.handle class="cursor-move font-semibold flex items-center gap-2">
-                                <x-icon name="bars-3" class="w-4 h-4 text-gray-500" />
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 10h16M4 14h16"></path></svg>
                                 {{ $menu->text }}
                             </div>
                             <div class="flex gap-2">
-                                <x-button flat icon="pencil" wire:click="$dispatch('openModal', { component: 'admin.modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})" />
-                                <x-button flat icon="trash" wire:click="confirmDelete({{ $menu->id }})" color="red" />
+                                <button wire:click="$dispatch('openModal', { component: 'admin.modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
+                                    class="p-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
+                                    ✏️
+                                </button>
+                                <button wire:click="confirmDelete({{ $menu->id }})"
+                                    class="p-2 text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-white">
+                                    🗑️
+                                </button>
                             </div>
                         </div>
 
@@ -74,12 +90,18 @@
                                 @foreach ($menu->children as $child)
                                     <li wire:sortable-group.item="{{ $child->id }}" wire:key="menu-child-{{ $child->id }}" class="flex justify-between items-center p-2 border rounded bg-gray-50 dark:bg-gray-800">
                                         <div wire:sortable-group.handle class="cursor-move flex items-center gap-2">
-                                            <x-icon name="bars-3" class="w-4 h-4 text-gray-400" />
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 10h16M4 14h16"></path></svg>
                                             {{ $child->text }}
                                         </div>
                                         <div class="flex gap-2">
-                                            <x-button xs flat icon="pencil" wire:click="$dispatch('openModal', { component: 'admin.modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})" />
-                                            <x-button xs flat icon="trash" wire:click="confirmDelete({{ $child->id }})" color="red" />
+                                            <button wire:click="$dispatch('openModal', { component: 'admin.modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
+                                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
+                                                ✏️
+                                            </button>
+                                            <button wire:click="confirmDelete({{ $child->id }})"
+                                                class="text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-white">
+                                                🗑️
+                                            </button>
                                         </div>
                                     </li>
                                 @endforeach
