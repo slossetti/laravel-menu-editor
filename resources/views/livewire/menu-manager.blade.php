@@ -39,7 +39,7 @@
             <form wire:submit.prevent="createNewType" class="flex items-end gap-4">
                 <div class="w-1/2">
                     <label for="newType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre del nuevo tipo</label>
-                    <input id="newType" type="text" wire:model.defer="newType" placeholder="Ej: auditoria" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white" />
+                    <input id="newType" type="text" wire:model="newType" placeholder="Ej: auditoria" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white" />
                 </div>
 
                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700">
@@ -82,7 +82,7 @@
                                     class="p-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
                                     ✏️
                                 </button>
-                                <button wire:click="confirmDelete({{ $menu->id }})"
+                                <button wire:click="delete({{ $menu->id }})"
                                     class="p-2 text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-white">
                                     🗑️
                                 </button>
@@ -102,7 +102,7 @@
                                                 class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
                                                 ✏️
                                             </button>
-                                            <button wire:click="confirmDelete({{ $child->id }})"
+                                            <button wire:click="delete({{ $child->id }})"
                                                 class="text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-white">
                                                 🗑️
                                             </button>

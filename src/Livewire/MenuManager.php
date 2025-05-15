@@ -4,11 +4,9 @@ namespace MenuEditor\Livewire;
 
 use Livewire\Component;
 use App\Services\MenuService;
-use WireUi\Traits\WireUiActions;
 
 class MenuManager extends Component
 {
-    Use WireUiActions;
 
     public $listeners = [
         'menu-updated' => 'reloadMenuList',
@@ -99,29 +97,12 @@ class MenuManager extends Component
         $this->editingId = null;
     }
 
-    public function confirmDelete($id): void
-    {
-        $this->notification()->confirm([
-            'title' => 'Estas seguro?',
-            'description' => 'Eliminar el item?',
-            'acceptLabel' => 'Si, eliminar',
-            'method' => 'delete',
-            'params' =>  ['id' => $id],
-        ]);
-    }
-
     public function delete($id)
     {
-        $this->notification()->send([
-            'title' => 'Item eliminado',
-            'description' => 'El item se eliminó correctamente.',
-            'icon' => 'success',
-        ]);
 
         $this->menuModelClass::where('id', $id)->orWhere('parent_id', $id)->delete();
         MenuService::clearCache();
         $this->loadMenus();
-
     }
 
     public function updateOrder($items)
