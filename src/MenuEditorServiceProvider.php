@@ -25,6 +25,10 @@ class MenuEditorServiceProvider extends ServiceProvider
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'migrations');
 
+        $this->publishes([
+            __DIR__.'/../config/menu-editor.php' => config_path('menu-editor.php'),
+        ], 'config');
+
         if (! $this->app->routesAreCached()) {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         }
