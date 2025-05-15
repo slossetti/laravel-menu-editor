@@ -23,6 +23,16 @@ return new class extends Migration
             $table->string('can')->nullable();
             $table->timestamps();
         });
+
+        // Seeder embebido
+        \MenuEditor\Models\Menu::create([
+            'type' => 'menu',
+            'text' => 'Inicio',
+            'route' => '/dashboard',
+            'order' => 1,
+            'icon' => 'home',
+            'match' => 'dashboard',
+        ]);
     }
 
     /**

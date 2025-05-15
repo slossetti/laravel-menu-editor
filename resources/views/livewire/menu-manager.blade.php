@@ -15,10 +15,14 @@
             <div class="flex items-end gap-4">
                 <div class="w-1/2">
                     <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Seleccionar tipo existente</label>
-                    <select id="type" wire:model.live="type" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white">
-                        <option value="menu">Principal</option>
-                        <option value="admin">Admin</option>
-                        <option value="aprobador">Aprobador</option>
+                    <select
+                        id="type"
+                        wire:model.live="type"
+                        class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                    >
+                        @foreach ($types as $typeOption)
+                            <option value="{{ $typeOption }}">{{ ucfirst($typeOption) }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -74,7 +78,7 @@
                                 {{ $menu->text }}
                             </div>
                             <div class="flex gap-2">
-                                <button wire:click="$dispatch('openModal', { component: 'admin.modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
+                                <button wire:click="$dispatch('openModal', { component: 'modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
                                     class="p-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
                                     ✏️
                                 </button>
@@ -94,7 +98,7 @@
                                             {{ $child->text }}
                                         </div>
                                         <div class="flex gap-2">
-                                            <button wire:click="$dispatch('openModal', { component: 'admin.modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
+                                            <button wire:click="$dispatch('openModal', { component: 'modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
                                                 class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
                                                 ✏️
                                             </button>

@@ -18,6 +18,7 @@ class MenuManager extends Component
     public $type = 'menu';
     public $menus = [];
     public $types = [];
+    public $availableTypes = [];
 
     public $text, $route, $match, $icon, $can, $parent_id;
     public $editingId = null;
@@ -36,6 +37,12 @@ class MenuManager extends Component
         }
 
         $this->loadTypes();
+
+        // si no se eligió tipo y hay tipos disponibles, usar el primero
+        if (!$this->type && count($this->types)) {
+            $this->type = $this->types[0];
+        }
+
         $this->loadMenus();
     }
 
