@@ -119,7 +119,9 @@ class MenuManager extends Component
     public function updateOrder($items)
     {
         foreach ($items as $index => $item) {
-            Menu::where('id', $item['id'])->update(['order' => $index]);
+            Menu::where('id', $item['value'])->update([
+                'order' => $index + 1,
+            ]);
         }
 
         MenuService::clearCache();
