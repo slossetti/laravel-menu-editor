@@ -44,7 +44,7 @@
     <x-menu-editor::flex-card
         :title="'Ítems del menú (' . ucfirst($type) . ')'"
         class="bg-gray-50 dark:bg-gray-800"
-            :headerAction="view('components.menu-create-button', ['type' => $type])->render()"
+            :headerAction="view('menu-editor::components.menu-create-button', ['type' => $type])->render()"
     >
         @if ($menus->isEmpty())
             <div class="text-gray-500">No hay ítems en este menú.</div>
