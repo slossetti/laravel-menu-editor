@@ -62,6 +62,38 @@ Los ítems están cacheados automáticamente por tipo de menú (menu, admin, etc
 
 El archivo `config/menu-editor.php` se puede usar para definir opciones globales del editor (en desarrollo).
 
+### 🎨 Estilos del menú
+
+Este paquete incluye una hoja de estilos con clases específicas para el sidebar y sus elementos (`sidebar-item`, `sidebar-active`, `sidebar-submenu`, etc.).
+
+#### 🛠 Publicar el archivo CSS
+
+Para usar los estilos por defecto, primero publicá el archivo:
+
+```bash
+php artisan vendor:publish --tag=menu-editor-css
+```
+
+Esto copiará el archivo a:
+
+```bash
+resources/css/vendor/menu-editor.css
+```
+
+Luego, importalo en tu archivo principal (app.css):
+
+```blade
+@import 'vendor/menu-editor.css';
+```
+
+Y compilá los assets con:
+
+```bash
+npm run dev
+# o
+npm run build
+```
+
 ---
 
 ## 🛠 Requisitos
