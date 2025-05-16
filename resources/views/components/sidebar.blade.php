@@ -27,7 +27,7 @@
             @endif
 
             {{-- Ítem con submenú --}}
-            @elseif ($hasChildren)
+            @if ($hasChildren)
                 @php
                     $expanded = $item->children->contains(fn ($sub) => filled($sub->match) && request()->routeIs($sub->match));
                 @endphp
