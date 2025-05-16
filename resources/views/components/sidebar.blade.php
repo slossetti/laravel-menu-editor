@@ -3,6 +3,13 @@
 <nav class="w-full px-3">
     <ul class="space-y-1">
         @foreach ($menuItems as $item)
+            @php
+                $hasChildren = $item->children && $item->children->isNotEmpty();
+                $hasRoute = filled($item->route) && Route::has($item->route);
+                $isActive = filled($item->match) && request()->routeIs($item->match);
+            @endphp
+
+            {{-- Encabezado simple --}}
             @if (is_null($item->route) && is_null($item->parent_id) && $item->children->isEmpty())
                 <li x-show="sidebarOpen" x-cloak class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-400">
                     {{ $item->text }}
@@ -10,9 +17,10 @@
                 @continue
             @endif
 
-            @if ($item->children->isNotEmpty())
+            {{-- Ítem con submenú --}}
+            @elseif ($hasChildren)
                 @php
-                    $expanded = $item->children->contains(fn ($sub) => request()->routeIs($sub->match));
+                    $expanded = $item->children->contains(fn ($sub) => filled($sub->match) && request()->routeIs($sub->match));
                 @endphp
 
                 <li x-data="{ open: {{ $expanded ? 'true' : 'false' }} }">
@@ -32,14 +40,19 @@
                         </span>
                     </button>
 
+                    {{-- Submenú colapsado --}}
                     <ul x-show="!sidebarOpen" x-cloak class="sidebar-submenu-collapsed">
                         @foreach ($item->children as $sub)
+                            @php
+                                $subRoute = filled($sub->route) && Route::has($sub->route) ? route($sub->route) : '#';
+                                $subActive = filled($sub->match) && request()->routeIs($sub->match);
+                            @endphp
+
                             @if (!$sub->can || auth()->user()->can($sub->can))
                                 <li class="flex justify-center">
                                     <a
-                                        href="{{ $item->route && Route::has($item->route) ? route($item->route) : '#' }}"
-                                        class="sidebar-subitem flex items-center transition-all
-                                            {{ request()->routeIs($sub->match) ? 'sidebar-active' : 'sidebar-inactive' }}"
+                                        href="{{ $subRoute }}"
+                                        class="sidebar-subitem flex items-center transition-all {{ $subActive ? 'sidebar-active' : 'sidebar-inactive' }}"
                                     >
                                         @if ($sub->icon)
                                             <x-menu-editor::tooltip :label="$sub->text">
@@ -52,14 +65,19 @@
                         @endforeach
                     </ul>
 
+                    {{-- Submenú expandido --}}
                     <ul x-show="sidebarOpen && open" x-cloak class="sidebar-submenu">
                         @foreach ($item->children as $sub)
+                            @php
+                                $subRoute = filled($sub->route) && Route::has($sub->route) ? route($sub->route) : '#';
+                                $subActive = filled($sub->match) && request()->routeIs($sub->match);
+                            @endphp
+
                             @if (!$sub->can || auth()->user()->can($sub->can))
                                 <li>
                                     <a
-                                        href="{{ $item->route && Route::has($item->route) ? route($item->route) : '#' }}"
-                                        class="sidebar-subitem flex items-center transition-all
-                                            {{ request()->routeIs($sub->match) ? 'sidebar-active' : 'sidebar-inactive' }}"
+                                        href="{{ $subRoute }}"
+                                        class="sidebar-subitem flex items-center transition-all {{ $subActive ? 'sidebar-active' : 'sidebar-inactive' }}"
                                     >
                                         <span class="transition-all">{{ $sub->text }}</span>
                                     </a>
@@ -69,16 +87,16 @@
                     </ul>
                 </li>
 
+            {{-- Ítem simple con o sin ruta --}}
             @elseif (!$item->can || auth()->user()->can($item->can))
                 <li>
                     <a
-                        href="{{ $item->route && Route::has($item->route) ? route($item->route) : '#' }}"
-                        class="sidebar-item flex items-center transition-all
-                            {{ request()->routeIs($item->match) ? 'sidebar-active' : 'sidebar-inactive' }}"
+                        href="{{ $hasRoute ? route($item->route) : '#' }}"
+                        class="sidebar-item flex items-center transition-all {{ $isActive ? 'sidebar-active' : 'sidebar-inactive' }}"
                         :class="sidebarOpen ? 'px-4 justify-start' : 'px-4 justify-center'"
                     >
                         <template x-if="!sidebarOpen">
-                            <<x-menu-editor::tooltip :label="$item->text">
+                            <x-menu-editor::tooltip :label="$item->text">
                                 <x-icon name="{{ $item->icon }}" class="w-5 h-5 shrink-0" />
                             </x-menu-editor::tooltip>
                         </template>
@@ -92,6 +110,10 @@
                         </span>
                     </a>
                 </li>
+
+            {{-- Fallback por si no entra en ninguna condición --}}
+            @else
+                <li class="text-red-500 text-sm">Item no reconocido: {{ $item->text }}</li>
             @endif
         @endforeach
     </ul>
