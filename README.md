@@ -28,6 +28,7 @@ composer require slossetti/menu-editor
 php artisan vendor:publish --tag=views
 php artisan vendor:publish --tag=migrations
 php artisan vendor:publish --tag=config
+php artisan vendor:publish --tag=styles
 ```
 
 ### Ejecutar migraciones
@@ -62,6 +63,14 @@ Los ítems están cacheados automáticamente por tipo de menú (menu, admin, etc
 
 El archivo `config/menu-editor.php` se puede usar para definir opciones globales del editor (en desarrollo).
 
+```php
+return [
+
+    'menu_model' => MenuEditor\Models\Menu::class,
+    'default_type' => 'menu',
+];
+```
+
 ### 🎨 Estilos del menú
 
 Este paquete incluye una hoja de estilos con clases específicas para el sidebar y sus elementos (`sidebar-item`, `sidebar-active`, `sidebar-submenu`, etc.).
@@ -71,7 +80,7 @@ Este paquete incluye una hoja de estilos con clases específicas para el sidebar
 Para usar los estilos por defecto, primero publicá el archivo:
 
 ```bash
-php artisan vendor:publish --tag=menu-editor-css
+php artisan vendor:publish --tag=styles
 ```
 
 Esto copiará el archivo a:

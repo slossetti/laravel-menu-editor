@@ -36,6 +36,10 @@ class MenuEditorServiceProvider extends ServiceProvider
             __DIR__.'/../config/menu-editor.php' => config_path('menu-editor.php'),
         ], 'config');
 
+        $this->publishes([
+            __DIR__.'/../resources/css/menu-editor.css' => resource_path('css/vendor/menu-editor.css'),
+        ], 'styles');
+
     }
 
     public function register()
