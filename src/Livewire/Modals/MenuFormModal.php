@@ -2,12 +2,12 @@
 
 namespace MenuEditor\Livewire\Modals;
 
-use App\Services\MenuService;
+use MenuEditor\Services\MenuService;
 use LivewireUI\Modal\ModalComponent;
 
 class MenuFormModal extends ModalComponent
 {
-    protected $menuModel;
+    public $menuModel;
     public $editingId;
     public $type;
     public $text, $route, $match, $icon, $can, $parent_id;

@@ -3,8 +3,6 @@
 <nav class="w-full px-3">
     <ul class="space-y-1">
         @foreach ($menuItems as $item)
-
-            {{-- Si es encabezado (sin ruta, sin hijos) --}}
             @if (is_null($item->route) && is_null($item->parent_id) && $item->children->isEmpty())
                 <li x-show="sidebarOpen" x-cloak class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide dark:text-gray-400">
                     {{ $item->text }}
@@ -12,7 +10,6 @@
                 @continue
             @endif
 
-            {{-- Si tiene submenú --}}
             @if ($item->children->isNotEmpty())
                 @php
                     $expanded = $item->children->contains(fn ($sub) => request()->routeIs($sub->match));
@@ -35,20 +32,19 @@
                         </span>
                     </button>
 
-                    {{-- Submenú colapsado --}}
                     <ul x-show="!sidebarOpen" x-cloak class="sidebar-submenu-collapsed">
                         @foreach ($item->children as $sub)
                             @if (!$sub->can || auth()->user()->can($sub->can))
                                 <li class="flex justify-center">
                                     <a
-                                        href="{{ route($sub->route) }}"
+                                        href="{{ $item->route && Route::has($item->route) ? route($item->route) : '#' }}"
                                         class="sidebar-subitem flex items-center transition-all
                                             {{ request()->routeIs($sub->match) ? 'sidebar-active' : 'sidebar-inactive' }}"
                                     >
                                         @if ($sub->icon)
-                                            <x-tooltip :label="$sub->text">
+                                            <x-menu-editor::tooltip :label="$sub->text">
                                                 <x-icon :name="$sub->icon" class="w-5 h-5 text-zinc-500 dark:text-zinc-300" />
-                                            </x-tooltip>
+                                            </x-menu-editor::tooltip>
                                         @endif
                                     </a>
                                 </li>
@@ -56,13 +52,12 @@
                         @endforeach
                     </ul>
 
-                    {{-- Submenú expandido --}}
                     <ul x-show="sidebarOpen && open" x-cloak class="sidebar-submenu">
                         @foreach ($item->children as $sub)
                             @if (!$sub->can || auth()->user()->can($sub->can))
                                 <li>
                                     <a
-                                        href="{{ route($sub->route) }}"
+                                        href="{{ $item->route && Route::has($item->route) ? route($item->route) : '#' }}"
                                         class="sidebar-subitem flex items-center transition-all
                                             {{ request()->routeIs($sub->match) ? 'sidebar-active' : 'sidebar-inactive' }}"
                                     >
@@ -74,19 +69,18 @@
                     </ul>
                 </li>
 
-            {{-- Ítem simple --}}
             @elseif (!$item->can || auth()->user()->can($item->can))
                 <li>
                     <a
-                        href="{{ route($item->route) }}"
+                        href="{{ $item->route && Route::has($item->route) ? route($item->route) : '#' }}"
                         class="sidebar-item flex items-center transition-all
                             {{ request()->routeIs($item->match) ? 'sidebar-active' : 'sidebar-inactive' }}"
                         :class="sidebarOpen ? 'px-4 justify-start' : 'px-4 justify-center'"
                     >
                         <template x-if="!sidebarOpen">
-                            <x-tooltip :label="$item->text">
+                            <<x-menu-editor::tooltip :label="$item->text">
                                 <x-icon name="{{ $item->icon }}" class="w-5 h-5 shrink-0" />
-                            </x-tooltip>
+                            </x-menu-editor::tooltip>
                         </template>
 
                         <template x-if="sidebarOpen">

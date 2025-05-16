@@ -13,7 +13,7 @@ class MenuManager extends Component
         'menu-deleted' => 'reloadMenuList',
     ];
 
-    public $type = 'menu';
+    public $type = null;
     public $menus = [];
     public $types = [];
     public $availableTypes = [];
@@ -52,6 +52,7 @@ class MenuManager extends Component
 
     public function loadTypes()
     {
+
         $this->types = $this->menuModelClass::select('type')
             ->distinct()
             ->orderBy('type')
@@ -72,6 +73,20 @@ class MenuManager extends Component
     {
         $this->validate([
             'newType' => 'required|string|max:50|regex:/^[a-z0-9_\-]+$/i',
+        ]);
+
+        $model = $this->menuModelClass;
+
+        // Crear un encabezado o ítem vacío como marcador
+        $model::create([
+            'type' => $this->newType,
+            'text' => ucfirst($this->newType),
+            'order' => 1,
+            'route' => null,
+            'match' => null,
+            'icon' => null,
+            'can' => null,
+            'parent_id' => null,
         ]);
 
         $this->type = $this->newType;

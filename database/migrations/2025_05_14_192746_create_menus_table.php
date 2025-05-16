@@ -28,10 +28,10 @@ return new class extends Migration
         \MenuEditor\Models\Menu::create([
             'type' => 'menu',
             'text' => 'Inicio',
-            'route' => '/dashboard',
+            'route' => '',
             'order' => 1,
             'icon' => 'home',
-            'match' => 'dashboard',
+            'match' => '',
         ]);
     }
 

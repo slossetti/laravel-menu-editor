@@ -20,6 +20,8 @@
                         wire:model.live="type"
                         class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
                     >
+                        <option value="">Seleccionar tipo de menú</option>
+
                         @foreach ($types as $typeOption)
                             <option value="{{ $typeOption }}">{{ ucfirst($typeOption) }}</option>
                         @endforeach
