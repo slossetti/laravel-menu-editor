@@ -1,4 +1,13 @@
-@props(['menuItems'])
+@props(['menuItems' => null, 'type' => null])
+
+@php
+    use MenuEditor\Services\MenuService;
+
+    // Si no vino $menuItems, lo busco con el type que me pasaron
+    if (! is_null($type)) {
+        $menuItems = MenuService::getMenuItems($type);
+    }
+@endphp
 
 <nav class="w-full px-3">
     <ul class="space-y-1">
