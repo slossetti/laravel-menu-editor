@@ -13,7 +13,7 @@
     <x-menu-editor::flex-card title="Tipo de Menú" class="bg-gray-50 dark:bg-gray-800">
         @if (!$creatingNewType)
             <div class="flex items-end gap-4">
-                <div class="w-1/2">
+                <div class="w-1/3">
                     <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Seleccionar tipo existente</label>
                     <select
                         id="type"
@@ -39,7 +39,7 @@
             </div>
         @else
             <form wire:submit.prevent="createNewType" class="flex items-end gap-4">
-                <div class="w-1/2">
+                <div class="w-1/3">
                     <label for="newType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre del nuevo tipo</label>
                     <input id="newType" type="text" wire:model="newType" placeholder="Ej: auditoria" class="w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white" />
                 </div>
