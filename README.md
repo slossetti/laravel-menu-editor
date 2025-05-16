@@ -42,8 +42,20 @@ php artisan migrate
 
 Incluí el componente en cualquier vista:
 
+Se agrega sidebarOpen, ya que tiene la opción para ver iconos sin textos si esta colapsado.
+
 ```blade
-@livewire('menu-manager')
+<div x-data="{ sidebarOpen: true }">
+    <x-menu-editor::sidebar />
+</div>
+```
+
+Si se tiene varios tipos de menu se puede especificar:
+
+```blade
+<div x-data="{ sidebarOpen: true }">
+    <x-menu-editor::sidebar type="Admin" />
+</div>
 ```
 
 > El componente detecta el tipo de menú actual (`menu`, `admin`, `aprobador`) y permite gestionarlo de forma visual.

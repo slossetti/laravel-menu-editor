@@ -49,14 +49,14 @@
 
         {{-- Botones --}}
         <div class="col-span-2 flex gap-2 justify-end mt-4">
-            <button type="button" wire:click="$dispatch('closeModal')"
-                class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-white dark:border-gray-600 dark:hover:bg-gray-800">
-                ✖ Cancelar
+            <button type="button" wire:click="$dispatch('closeModal')" class="inline-flex items-center px-4 py-2 text-sm font-medium rounded border hover:bg-gray-100 dark:border-gray-600 dark:text-white dark:hover:bg-gray-800">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+                Cancelar
             </button>
 
-            <button type="submit"
-                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                ✔ Guardar
+            <button type="submit" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-700">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>
+                    Guardar
             </button>
         </div>
     </form>
