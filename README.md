@@ -42,54 +42,19 @@ php artisan migrate
 
 Incluí el componente en cualquier vista:
 
-Se agrega sidebarOpen, ya que tiene la opción para ver iconos sin textos si esta colapsado.
-
 ```blade
-<div x-data="{ sidebarOpen: true }">
-    <x-menu-editor::sidebar />
-</div>
+<x-menu-editor::sidebar />
 ```
 
 Si se tiene varios tipos de menu se puede especificar:
 
 ```blade
-<div x-data="{ sidebarOpen: true }">
-    <x-menu-editor::sidebar type="Admin" />
-</div>
+<x-menu-editor::sidebar type="Admin" />
 ```
 
 > El componente detecta muestra el primer tipo de menu si no es especificado y permite gestionarlo de forma visual.
 
 ---
-
-## Menu en vistas
-
-Este paquete registra automáticamente un View Composer que inyecta los ítems del menú en todas las vistas bajo la variable:
-
-```php
-$menuItems
-```
-
-Esto te permite renderizar el menú desde cualquier lugar:
-
-```blade
-<ul>
-    @foreach ($menuItems as $item)
-        <li>
-            <a href="{{ $item->route }}">
-                {{ $item->text }}
-            </a>
-            @if ($item->children->isNotEmpty())
-                <ul>
-                    @foreach ($item->children as $child)
-                        <li><a href="{{ $child->route }}">{{ $child->text }}</a></li>
-                    @endforeach
-                </ul>
-            @endif
-        </li>
-    @endforeach
-</ul>
-```
 
 Los ítems están cacheados automáticamente por tipo de menú (menu, admin, etc.).
 

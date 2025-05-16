@@ -9,7 +9,7 @@
     }
 @endphp
 
-<nav class="w-full px-3">
+<nav class="w-full px-3" x-data="{ sidebarOpen: true }">
     <ul class="space-y-1">
         @foreach ($menuItems as $item)
             @php
