@@ -58,7 +58,7 @@ Si se tiene varios tipos de menu se puede especificar:
 </div>
 ```
 
-> El componente detecta el tipo de menú actual (`menu`, `admin`, `aprobador`) y permite gestionarlo de forma visual.
+> El componente detecta muestra el primer tipo de menu si no es especificado y permite gestionarlo de forma visual.
 
 ---
 
