@@ -33,17 +33,10 @@ class MenuService
         return config('menu-editor.default_type', 'menu');
     }
 
+    public static function clearTypeCache(string $type): void
+    {
+        Cache::forget("menu_{$type}");
+    }
 
-    // public static function resolveType(): string
-    // {
-    //     $user = auth()->user();
-    //     $isAdmin = request()->is('admin*');
-
-    //     return match (true) {
-    //         $user?->hasRole('aprobador') => 'aprobador',
-    //         $isAdmin => 'admin',
-    //         default => 'menu',
-    //     };
-    // }
 
 }

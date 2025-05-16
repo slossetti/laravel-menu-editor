@@ -60,7 +60,7 @@ class MenuFormModal extends ModalComponent
 
         $this->menuModel::updateOrCreate(['id' => $this->editingId], $data);
 
-        MenuService::clearCache();
+        MenuService::clearTypeCache($this->type);
 
         $this->dispatch('menu-updated'); // Notifica al padre si es necesario
         $this->closeModal();

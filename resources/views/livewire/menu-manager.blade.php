@@ -100,7 +100,7 @@
                                             {{ $child->text }}
                                         </div>
                                         <div class="flex gap-2">
-                                            <button wire:click="$dispatch('openModal', { component: 'modals.menu-form-modal', arguments: { menuId: {{ $menu->id }}, type: '{{ $type }}' }})"
+                                            <button wire:click="$dispatch('openModal', { component: 'modals.menu-form-modal', arguments: { menuId: {{ $child->id }}, type: '{{ $type }}' }})"
                                                 class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-white">
                                                 ✏️
                                             </button>

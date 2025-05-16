@@ -52,7 +52,6 @@ class MenuManager extends Component
 
     public function loadTypes()
     {
-
         $this->types = $this->menuModelClass::select('type')
             ->distinct()
             ->orderBy('type')
@@ -64,7 +63,7 @@ class MenuManager extends Component
 
     public function reloadMenuList()
     {
-        MenuService::clearCache();
+        MenuService::clearTypeCache($this->type);
         $this->loadMenus();
     }
 
@@ -116,7 +115,7 @@ class MenuManager extends Component
     {
 
         $this->menuModelClass::where('id', $id)->orWhere('parent_id', $id)->delete();
-        MenuService::clearCache();
+        MenuService::clearTypeCache($this->type);
         $this->loadMenus();
     }
 
@@ -128,7 +127,7 @@ class MenuManager extends Component
             ]);
         }
 
-        MenuService::clearCache();
+        MenuService::clearTypeCache($this->type);
         $this->loadMenus();
     }
 
@@ -145,7 +144,7 @@ class MenuManager extends Component
             }
         }
 
-        MenuService::clearCache();
+        MenuService::clearTypeCache($this->type);
         $this->loadMenus();
     }
 
