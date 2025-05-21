@@ -37,7 +37,7 @@ class MenuEditorServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/../resources/css/menu-editor.css' => resource_path('css/vendor/menu-editor.css'),
+            __DIR__.'/../resources/views/css/menu-editor.css' => resource_path('css/vendor/menu-editor.css'),
         ], 'styles');
 
     }
