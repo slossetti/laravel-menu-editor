@@ -63,8 +63,18 @@ Para poder tener el admin del menu. Se debe generar una ruta que cargue el compo
 
 #### Adminstración del Menu
 
+Debes agregar en tu vista la llamada al componente:
+
 ```blade
-Route::get('menu-editor', MenuManager::class)->name('admin.menu-editor');
+<livewire:menu-manager />
+```
+
+y una ruta para poder acceder:
+
+```blade
+Route::get('menu-editor', function () {
+    return view('admin.menu-editor');
+})->name('admin.menu-editor');
 ```
 
 ## ⚙ Configuración
