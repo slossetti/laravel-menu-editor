@@ -1,5 +1,6 @@
 {
     "name": "slossetti/laravel-menu-editor",
+    "version": "1.0.0",
     "description": "Editor de menús para Laravel con Livewire 3",
     "type": "library",
     "license": "MIT",
