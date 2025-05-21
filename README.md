@@ -59,6 +59,14 @@ Si se tiene varios tipos de menu se puede especificar:
 
 Los ítems están cacheados automáticamente por tipo de menú (menu, admin, etc.).
 
+Para poder tener el admin del menu. Se debe generar una ruta que cargue el componente livewire que muestra el admin del menu.
+
+#### Adminstración del Menu
+
+```blade
+Route::get('menu-editor', MenuManager::class)->name('admin.menu-editor');
+```
+
 ## ⚙ Configuración
 
 El archivo `config/menu-editor.php` se puede usar para definir opciones globales del editor (en desarrollo).
