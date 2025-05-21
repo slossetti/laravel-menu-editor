@@ -19,7 +19,7 @@ Editor visual de menús con soporte para submenús, ordenamiento drag & drop, y 
 ## 📆 Instalación
 
 ```bash
-composer require slossetti/menu-editor
+composer require slossetti/laravel-menu-editor
 ```
 
 ### Publicar recursos (opcional)
